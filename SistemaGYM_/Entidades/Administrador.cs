@@ -9,12 +9,6 @@ public class Administrador
     public string Usuario { get; set; } = string.Empty;
     [Required]
     [MaxLength(50)]
-    public string Contraseña {get; set;} = string.Empty;
+    public string Contrasenia {get; set;} = string.Empty;
 
-    /*[Required]
-    public byte[] PasswordHash { get; set; } = [];
-
-    [Required]
-    public byte[] PasswordSalt { get; set; } = [];
-    */
 }

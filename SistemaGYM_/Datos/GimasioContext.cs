@@ -16,6 +16,7 @@ public class GimnasioContext(DbContextOptions<GimnasioContext> options) : DbCont
     public DbSet<Rutina> Rutinas { get; set; }
     public DbSet<Suscripcion> Suscripciones { get; set; }
     public DbSet<AlumnoSuscripcion> AlumnoSuscripciones { get; set; }
+    public DbSet<ActividadAlumno> ActividadesAlumno { get; set; }
 
 
 protected override void OnModelCreating(ModelBuilder modelBuilder)
