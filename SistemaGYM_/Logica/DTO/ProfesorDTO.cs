@@ -9,7 +9,7 @@ public record ProfesorDetalleDto(
     string Apellido, 
     string Direccion, 
     string Email, 
-    long Telefono, 
+    string Telefono, 
     string Descripcion
     
 );
@@ -21,6 +21,6 @@ public record ProfesorCreateDto(
     string Apellido, 
     string Direccion, 
     string Email, 
-    long Telefono, 
+    string Telefono, 
     string Descripcion
 );
