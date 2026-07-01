@@ -9,7 +9,6 @@ public static class ProfesorEndpoints
     {
         var group = app.MapGroup("/api/profesores");
 
-        // GET /api/profesores
         group.MapGet("/", async (IProfesorLogica logica) =>
         {
             var lista = await logica.ObtenerTodosAsync();
@@ -26,7 +25,6 @@ public static class ProfesorEndpoints
         .Produces(204)
         .Produces(500);
 
-        // GET /api/profesores/{id}
         group.MapGet("/{id:int}", async (int id, IProfesorLogica logica) =>
         {
             var profesor = await logica.ObtenerPorIdAsync(id);
@@ -43,7 +41,6 @@ public static class ProfesorEndpoints
         .Produces(404)
         .Produces(500);
 
-        // GET /api/profesores/{id}/detalle
         group.MapGet("/{id:int}/detalle", async (int id, IProfesorLogica logica) =>
         {
             var detalle = await logica.ObtenerDetallePorIdAsync(id);
@@ -60,7 +57,6 @@ public static class ProfesorEndpoints
         .Produces(404)
         .Produces(500);
 
-        // POST /api/profesores
         group.MapPost("/", async (ProfesorCreateDto dto, IProfesorLogica logica) =>
         {
             var creado = await logica.CrearAsync(dto);
@@ -75,7 +71,6 @@ public static class ProfesorEndpoints
         .Produces(403)
         .Produces(500);
 
-        // PUT /api/profesores/{id}
         group.MapPut("/{id:int}", async (int id, ProfesorCreateDto dto, IProfesorLogica logica) =>
         {
             var actualizado = await logica.ActualizarAsync(id, dto);
@@ -94,7 +89,6 @@ public static class ProfesorEndpoints
         .Produces(401)
         .Produces(500);
 
-        // DELETE /api/profesores/{id}
         group.MapDelete("/{id:int}", async (int id, IProfesorLogica logica) =>
         {
             var eliminado = await logica.EliminarAsync(id);

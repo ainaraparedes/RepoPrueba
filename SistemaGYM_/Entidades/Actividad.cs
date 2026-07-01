@@ -12,9 +12,9 @@ using System.ComponentModel.DataAnnotations.Schema;
         [MaxLength(500)]
         public string Descripcion { get; set; } = string.Empty;
         [Required]
-        public DateTime Horainicio { get; set; }
+        public DateTime HoraInicio { get; set; }
         [Required]
-        public DateTime Horafin { get; set; }
+        public DateTime HoraFin { get; set; }
         public int ProfesorId {get; set;}
         [ForeignKey("ProfesorId")]
         public Profesor Profesor { get; set; } = null!;

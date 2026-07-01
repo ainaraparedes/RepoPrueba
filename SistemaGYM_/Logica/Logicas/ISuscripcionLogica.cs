@@ -27,7 +27,9 @@ public class SuscripcionLogica : ISuscripcionLogica
         var lista = await _repo.ObtenerTodosAsync();
         return lista.Select(s => new SuscripcionDto(
             s.Id,
-            "Suscripción Activa" 
+            s.Nombre,
+            s.Precio,
+            s.DuracionDias
         ));
     }
 
@@ -38,19 +40,27 @@ public class SuscripcionLogica : ISuscripcionLogica
         
         return new SuscripcionDto(
             s.Id,
-            "Suscripción Activa"
+            s.Nombre,
+            s.Precio,
+            s.DuracionDias
         );
     }
 
     public async Task<SuscripcionDto> CrearAsync(SuscripcionCreateDto dto)
     {
-        var nueva = new Suscripcion(); 
+        var nueva = new Suscripcion{
+            Nombre = dto.Nombre,
+            Precio = dto.Precio,
+            DuracionDias = dto.DuracionDias
+        }; 
         
         await _repo.AgregarAsync(nueva);
         
         return new SuscripcionDto(
             nueva.Id,
-            dto.Descripcion
+            nueva.Nombre,
+            nueva.Precio,
+            nueva.DuracionDias
         );
     }
 
@@ -58,7 +68,10 @@ public class SuscripcionLogica : ISuscripcionLogica
     {
         var s = await _repo.ObtenerPorIdAsync(id);
         if (s == null) return false;
-
+        
+        s.Nombre = dto.Nombre;
+        s.Precio = dto.Precio;
+        s.DuracionDias = dto.DuracionDias;
 
         await _repo.ActualizarAsync(s);
         return true;

@@ -12,31 +12,79 @@ public static class AnuncioEndpoints
         group.MapGet("/", async (IAnuncioLogica logica) =>
         {
             var lista = await logica.ObtenerTodosAsync();
-            return Results.Ok(lista);
-        });
+            if (!lista.Any())
+                return Results.Json(new { status = 204, message = "No se encontraron anuncios" }, statusCode: 204);
+
+            return Results.Ok(new { status = 200, message = "Anuncios obtenidos correctamente", data = lista });
+        })
+        .WithName("GetAllAnuncios")
+        .WithSummary("Obtiene todos los anuncios")
+        .WithDescription("Retorna la lista completa de anuncios publicados en el sistema.")
+        .WithTags("Anuncio")
+        .Produces<IEnumerable<AnuncioDto>>(200)
+        .Produces(204)
+        .Produces(500);
 
         group.MapGet("/{id:int}", async (int id, IAnuncioLogica logica) =>
         {
             var item = await logica.ObtenerPorIdAsync(id);
-            return item is not null ? Results.Ok(item) : Results.NotFound();
-        });
+            if (item is null)
+                return Results.Json(new { status = 404, message = "Anuncio no encontrado" }, statusCode: 404);
+
+            return Results.Ok(new { status = 200, message = "Anuncio encontrado", data = item });
+        })
+        .WithName("GetAnuncioById")
+        .WithSummary("Obtiene un anuncio por ID")
+        .WithDescription("Retorna los datos de un anuncio específico según su ID.")
+        .WithTags("Anuncio")
+        .Produces<AnuncioDto>(200)
+        .Produces(404)
+        .Produces(500);
 
         group.MapPost("/", async (AnuncioCreateDto dto, IAnuncioLogica logica) =>
         {
             var creado = await logica.CrearAsync(dto);
-            return Results.Created($"/api/anuncios/{creado.Id}", creado);
-        });
+            return Results.Json(new { status = 201, message = "Anuncio creado correctamente", data = creado }, statusCode: 201);
+        })
+        .WithName("CreateAnuncio")
+        .WithSummary("Crea un nuevo anuncio")
+        .WithDescription("Publica un nuevo anuncio asociado a un profesor.")
+        .WithTags("Anuncio")
+        .Produces<AnuncioDto>(201)
+        .Produces(422)
+        .Produces(500);
 
         group.MapPut("/{id:int}", async (int id, AnuncioCreateDto dto, IAnuncioLogica logica) =>
         {
             var modificado = await logica.ActualizarAsync(id, dto);
-            return modificado ? Results.Ok() : Results.NotFound();
-        });
+            if (!modificado)
+                return Results.Json(new { status = 404, message = "Anuncio no encontrado" }, statusCode: 404);
+
+            return Results.Ok(new { status = 200, message = "Anuncio actualizado correctamente" });
+        })
+        .WithName("UpdateAnuncio")
+        .WithSummary("Actualiza un anuncio existente")
+        .WithDescription("Modifica los datos de un anuncio ya publicado.")
+        .WithTags("Anuncio")
+        .Produces(200)
+        .Produces(404)
+        .Produces(422)
+        .Produces(500);
 
         group.MapDelete("/{id:int}", async (int id, IAnuncioLogica logica) =>
         {
             var eliminado = await logica.EliminarAsync(id);
-            return eliminado ? Results.NoContent() : Results.NotFound();
-        });
+            if (!eliminado)
+                return Results.Json(new { status = 404, message = "Anuncio no encontrado" }, statusCode: 404);
+
+            return Results.Json(new { status = 204, message = "Anuncio eliminado correctamente" }, statusCode: 204);
+        })
+        .WithName("DeleteAnuncio")
+        .WithSummary("Elimina un anuncio")
+        .WithDescription("Elimina un anuncio del sistema.")
+        .WithTags("Anuncio")
+        .Produces(204)
+        .Produces(404)
+        .Produces(500);
     }
 }

@@ -1,4 +1,5 @@
 using SistemaGYM.Logica;
+using SistemaGYM.Logica.DTOs;
 
 namespace SistemaGYM.Endpoints;
 
@@ -6,7 +7,10 @@ public static class ActividadAlumnoEndpoints
 {
     public static void MapActividadAlumnoEndpoints(this IEndpointRouteBuilder app)
     {
-        app.MapPost("/api/alumnos/{id:int}/actividades/{actividadId:int}",
+        var alumnosGroup = app.MapGroup("/api/alumnos").WithTags("ActividadAlumno");
+        var actividadesGroup = app.MapGroup("/api/actividades").WithTags("ActividadAlumno");
+
+        alumnosGroup.MapPost("/{id:int}/actividades/{actividadId:int}",
             async (int id, int actividadId, IActividadAlumnoLogica logica) =>
         {
             var (resultado, data) = await logica.InscribirAsync(id, actividadId);
@@ -22,9 +26,16 @@ public static class ActividadAlumnoEndpoints
                 _ =>
                     Results.Json(new { status = 201, message = "Inscripción realizada correctamente", data }, statusCode: 201)
             };
-        });
+        })
+        .WithName("InscribirAlumnoEnActividad")
+        .WithSummary("Inscribe a un alumno en una actividad")
+        .WithDescription("Da de alta la inscripción del alumno a la actividad indicada. Si ya existía una inscripción inactiva, la reactiva.")
+        .Produces<InscripcionDto>(201)
+        .Produces(404)
+        .Produces(409)
+        .Produces(500);
 
-        app.MapDelete("/api/alumnos/{id:int}/actividades/{actividadId:int}",
+        alumnosGroup.MapDelete("/{id:int}/actividades/{actividadId:int}",
             async (int id, int actividadId, IActividadAlumnoLogica logica) =>
         {
             var resultado = await logica.DarDeBajaAsync(id, actividadId);
@@ -33,9 +44,15 @@ public static class ActividadAlumnoEndpoints
                 return Results.Json(new { status = 404, message = "No se encontró una inscripción activa para ese alumno en esa actividad" }, statusCode: 404);
 
             return Results.Json(new { status = 204, message = "Inscripción dada de baja correctamente" }, statusCode: 204);
-        });
+        })
+        .WithName("DarDeBajaInscripcion")
+        .WithSummary("Da de baja la inscripción de un alumno en una actividad")
+        .WithDescription("Marca como inactiva la inscripción del alumno a la actividad indicada.")
+        .Produces(204)
+        .Produces(404)
+        .Produces(500);
 
-        app.MapGet("/api/actividades/{id:int}/alumnos",
+        actividadesGroup.MapGet("/{id:int}/alumnos",
             async (int id, IActividadAlumnoLogica logica) =>
         {
             var (resultado, data) = await logica.ObtenerAlumnosPorActividadAsync(id);
@@ -47,6 +64,13 @@ public static class ActividadAlumnoEndpoints
                 return Results.Json(new { status = 204, message = "No hay alumnos inscriptos en esta actividad" }, statusCode: 204);
 
             return Results.Ok(new { status = 200, message = "Alumnos inscriptos obtenidos correctamente", data });
-        });
+        })
+        .WithName("GetAlumnosPorActividad")
+        .WithSummary("Obtiene los alumnos inscriptos en una actividad")
+        .WithDescription("Retorna la lista de alumnos actualmente inscriptos y activos en la actividad indicada.")
+        .Produces<IEnumerable<AlumnoInscriptoDto>>(200)
+        .Produces(204)
+        .Produces(404)
+        .Produces(500);
     }
 }
