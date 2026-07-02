@@ -29,7 +29,7 @@ public class AnuncioLogica : IAnuncioLogica
             a.Id, 
             a.Titulo, 
             a.Descripcion, 
-            a.FechaPublicacion.ToString("yyyy-MM-dd"), 
+            a.FechaPublicacion, 
             a.ProfesorId
         ));
     }
@@ -43,7 +43,7 @@ public class AnuncioLogica : IAnuncioLogica
             a.Id, 
             a.Titulo, 
             a.Descripcion, 
-            a.FechaPublicacion.ToString("yyyy-MM-dd"), 
+            a.FechaPublicacion, 
             a.ProfesorId
         );
     }
@@ -54,7 +54,7 @@ public class AnuncioLogica : IAnuncioLogica
         {
             Titulo = dto.Titulo,
             Descripcion = dto.Descripcion,
-            FechaPublicacion = DateTime.Parse(dto.FechaPublicacion),
+            FechaPublicacion = dto.FechaPublicacion,
             ProfesorId = dto.ProfesorId
         };
         
@@ -64,7 +64,7 @@ public class AnuncioLogica : IAnuncioLogica
             nuevo.Id, 
             nuevo.Titulo, 
             nuevo.Descripcion, 
-            nuevo.FechaPublicacion.ToString("yyyy-MM-dd"), 
+            nuevo.FechaPublicacion, 
             nuevo.ProfesorId
         );
     }
@@ -76,7 +76,7 @@ public class AnuncioLogica : IAnuncioLogica
 
         a.Titulo = dto.Titulo;
         a.Descripcion = dto.Descripcion;
-        a.FechaPublicacion = DateTime.Parse(dto.FechaPublicacion);
+        a.FechaPublicacion = dto.FechaPublicacion;
         a.ProfesorId = dto.ProfesorId;
 
         await _repo.ActualizarAsync(a);

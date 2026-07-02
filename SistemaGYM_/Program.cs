@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Servicios :)
 
 builder.Services.AddOpenApi();
+builder.Services.AddValidation();
 
 // DbContext cadena de conexion!!
 builder.Services.AddDbContext<GimnasioContext>(options =>

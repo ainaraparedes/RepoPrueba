@@ -28,8 +28,8 @@ public class PagoLogica : IPagoLogica
         return lista.Select(p => new PagoDto(
             p.Id, 
             p.Monto, 
-            p.FechaPago.ToString("yyyy-MM-dd"), 
-            p.MetodoPago.ToString(), 
+            p.FechaPago, 
+            p.MetodoPago, 
             p.AlumnoId, 
             p.AlumnoSuscripcionId
         ));
@@ -43,8 +43,8 @@ public class PagoLogica : IPagoLogica
         return new PagoDto(
             p.Id, 
             p.Monto, 
-            p.FechaPago.ToString("yyyy-MM-dd"), 
-            p.MetodoPago.ToString(), 
+            p.FechaPago, 
+            p.MetodoPago, 
             p.AlumnoId, 
             p.AlumnoSuscripcionId
         );
@@ -55,8 +55,8 @@ public class PagoLogica : IPagoLogica
         var nuevo = new Pago
         {
             Monto = dto.Monto,
-            FechaPago = DateTime.Parse(dto.FechaPago),
-            MetodoPago = Enum.Parse<MetodoPago>(dto.MetodoPago, true), 
+            FechaPago = dto.FechaPago,
+            MetodoPago = dto.MetodoPago, 
             AlumnoId = dto.AlumnoId,
             AlumnoSuscripcionId = dto.AlumnoSuscripcionId
         };
@@ -66,8 +66,8 @@ public class PagoLogica : IPagoLogica
         return new PagoDto(
             nuevo.Id, 
             nuevo.Monto, 
-            nuevo.FechaPago.ToString("yyyy-MM-dd"), 
-            nuevo.MetodoPago.ToString(), 
+            nuevo.FechaPago, 
+            nuevo.MetodoPago, 
             nuevo.AlumnoId, 
             nuevo.AlumnoSuscripcionId
         );
@@ -79,8 +79,8 @@ public class PagoLogica : IPagoLogica
         if (p == null) return false;
 
         p.Monto = dto.Monto;
-        p.FechaPago = DateTime.Parse(dto.FechaPago);
-        p.MetodoPago = Enum.Parse<MetodoPago>(dto.MetodoPago, true);
+        p.FechaPago = dto.FechaPago;
+        p.MetodoPago = dto.MetodoPago;
         p.AlumnoId = dto.AlumnoId;
         p.AlumnoSuscripcionId = dto.AlumnoSuscripcionId;
 

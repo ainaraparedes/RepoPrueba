@@ -29,10 +29,10 @@ public class ActividadLogica : IActividadLogica
             a.ActividadId, 
             a.Nombre, 
             a.Descripcion, 
-            a.HoraInicio.ToString("HH:mm"), 
-            a.HoraFin.ToString("HH:mm"), 
+            a.HoraInicio, 
+            a.HoraFin, 
             a.ProfesorId, 
-            a.Dias.ToString()
+            a.Dias
         ));
     }
 
@@ -45,10 +45,10 @@ public class ActividadLogica : IActividadLogica
             a.ActividadId, 
             a.Nombre, 
             a.Descripcion, 
-            a.HoraInicio.ToString("HH:mm"), 
-            a.HoraFin.ToString("HH:mm"), 
+            a.HoraInicio, 
+            a.HoraFin, 
             a.ProfesorId, 
-            a.Dias.ToString()
+            a.Dias
         );
     }
 
@@ -58,10 +58,10 @@ public class ActividadLogica : IActividadLogica
         {
             Nombre = dto.Nombre,
             Descripcion = dto.Descripcion,
-            HoraInicio = DateTime.Parse(dto.HoraInicio), 
-            HoraFin = DateTime.Parse(dto.HoraFin),       
+            HoraInicio = dto.HoraInicio, 
+            HoraFin = dto.HoraFin,       
             ProfesorId = dto.ProfesorId,
-            Dias = Enum.Parse<DiasSemana>(dto.Dias, true) 
+            Dias = dto.Dias
         };
         
         await _repo.AgregarAsync(nueva);
@@ -70,10 +70,10 @@ public class ActividadLogica : IActividadLogica
             nueva.ActividadId, 
             nueva.Nombre, 
             nueva.Descripcion, 
-            nueva.HoraInicio.ToString("HH:mm"), 
-            nueva.HoraFin.ToString("HH:mm"), 
+            nueva.HoraInicio, 
+            nueva.HoraFin, 
             nueva.ProfesorId, 
-            nueva.Dias.ToString()
+            nueva.Dias
         );
     }
 
@@ -84,10 +84,10 @@ public class ActividadLogica : IActividadLogica
 
         a.Nombre = dto.Nombre;
         a.Descripcion = dto.Descripcion;
-        a.HoraInicio = DateTime.Parse(dto.HoraInicio);
-        a.HoraFin = DateTime.Parse(dto.HoraFin);
+        a.HoraInicio = dto.HoraInicio;
+        a.HoraFin = dto.HoraFin;
         a.ProfesorId = dto.ProfesorId;
-        a.Dias = Enum.Parse<DiasSemana>(dto.Dias, true);
+        a.Dias = dto.Dias;
 
         await _repo.ActualizarAsync(a);
         return true;

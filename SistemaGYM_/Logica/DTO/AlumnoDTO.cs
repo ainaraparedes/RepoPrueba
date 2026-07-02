@@ -18,7 +18,7 @@ public record AlumnoDetalleDto(
     string Email, 
     string Telefono, 
     string Suscripcion,
-    string EstaActivo
+    bool EstaActivo
 );
 
 public record AlumnoCreateDto(
