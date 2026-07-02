@@ -7,7 +7,7 @@ public record ActividadDto(
     string HoraInicio, 
     string HoraFin, 
     int ProfesorId, 
-    string Dia
+    string Dias
 );
 
 public record ActividadCreateDto(
@@ -16,5 +16,5 @@ public record ActividadCreateDto(
     string HoraInicio, 
     string HoraFin, 
     int ProfesorId, 
-    string Dia
+    string Dias
 );

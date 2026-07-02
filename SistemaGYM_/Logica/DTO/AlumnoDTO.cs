@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace SistemaGYM.Logica.DTOs;
 
 public record AlumnoDto(
@@ -26,5 +28,9 @@ public record AlumnoCreateDto(
     string Direccion, 
     string Email, 
     string Telefono, 
-    bool EstaActivo
+    bool EstaActivo,
+
+    [property: Required(ErrorMessage = "La contraseña es obligatoria")]
+    [property: MinLength(6, ErrorMessage = "La contraseña debe tener al menos 6 caracteres")]
+    string Contrasenia
 );

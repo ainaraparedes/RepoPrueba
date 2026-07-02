@@ -32,7 +32,7 @@ public class ActividadLogica : IActividadLogica
             a.HoraInicio.ToString("HH:mm"), 
             a.HoraFin.ToString("HH:mm"), 
             a.ProfesorId, 
-            a.Dia.ToString()
+            a.Dias.ToString()
         ));
     }
 
@@ -48,7 +48,7 @@ public class ActividadLogica : IActividadLogica
             a.HoraInicio.ToString("HH:mm"), 
             a.HoraFin.ToString("HH:mm"), 
             a.ProfesorId, 
-            a.Dia.ToString()
+            a.Dias.ToString()
         );
     }
 
@@ -61,7 +61,7 @@ public class ActividadLogica : IActividadLogica
             HoraInicio = DateTime.Parse(dto.HoraInicio), 
             HoraFin = DateTime.Parse(dto.HoraFin),       
             ProfesorId = dto.ProfesorId,
-            Dia = Enum.Parse<DiasSemana>(dto.Dia, true) 
+            Dias = Enum.Parse<DiasSemana>(dto.Dias, true) 
         };
         
         await _repo.AgregarAsync(nueva);
@@ -73,7 +73,7 @@ public class ActividadLogica : IActividadLogica
             nueva.HoraInicio.ToString("HH:mm"), 
             nueva.HoraFin.ToString("HH:mm"), 
             nueva.ProfesorId, 
-            nueva.Dia.ToString()
+            nueva.Dias.ToString()
         );
     }
 
@@ -87,7 +87,7 @@ public class ActividadLogica : IActividadLogica
         a.HoraInicio = DateTime.Parse(dto.HoraInicio);
         a.HoraFin = DateTime.Parse(dto.HoraFin);
         a.ProfesorId = dto.ProfesorId;
-        a.Dia = Enum.Parse<DiasSemana>(dto.Dia, true);
+        a.Dias = Enum.Parse<DiasSemana>(dto.Dias, true);
 
         await _repo.ActualizarAsync(a);
         return true;

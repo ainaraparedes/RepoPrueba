@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using SistemaGYM.Entidades;
-using System.Security.Cryptography;
 
 namespace SistemaGYM.Datos;
 
@@ -18,25 +17,20 @@ public class GimnasioContext(DbContextOptions<GimnasioContext> options) : DbCont
     public DbSet<AlumnoSuscripcion> AlumnoSuscripciones { get; set; }
     public DbSet<ActividadAlumno> ActividadesAlumno { get; set; }
 
-
-protected override void OnModelCreating(ModelBuilder modelBuilder)
-{
-    modelBuilder.Entity<Usuario>()
-        .HasDiscriminator<string>("TipoUsuario")
-        .HasValue<Alumno>("Alumno")
-        .HasValue<Profesor>("Profesor")
-        .HasValue<Administrador>("Administrador");
-
-    modelBuilder.Entity<Pago>()
-        .Property(p => p.MetodoPago)
-        .HasConversion<string>();
-
-    modelBuilder.Entity<Administrador>().HasData(new Administrador
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        Id = 1,
-        Usuario = "Admin123",
-        Contraseña = "Contraseña123"
+        modelBuilder.Entity<Usuario>()
+            .HasDiscriminator<string>("TipoUsuario")
+            .HasValue<Alumno>("Alumno")
+            .HasValue<Profesor>("Profesor");
 
-    });
-}
+        modelBuilder.Entity<Pago>()
+            .Property(p => p.MetodoPago)
+            .HasConversion<string>();
+
+        var admin = new Administrador { Id = 1, Usuario = "Admin123" };
+        admin.SetContrasenia("Contraseña123");
+
+        modelBuilder.Entity<Administrador>().HasData(admin);
+    }
 }

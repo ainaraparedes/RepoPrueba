@@ -7,11 +7,11 @@ using SistemaGYM.Repositorios;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// ---------- Servicios ----------
+// Servicios :)
 
 builder.Services.AddOpenApi();
 
-// DbContext (SQL Server) - la cadena de conexión sale de appsettings.json
+// DbContext cadena de conexion!!
 builder.Services.AddDbContext<GimnasioContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -26,6 +26,7 @@ builder.Services.AddScoped<IPagoRepository, PagoRepository>();
 builder.Services.AddScoped<IRutinaRepository, RutinaRepository>();
 builder.Services.AddScoped<ISuscripcionRepository, SuscripcionRepository>();
 builder.Services.AddScoped<IAlumnoSuscripcionRepository, AlumnoSuscripcionRepository>();
+builder.Services.AddScoped<IAuthLogica, AuthLogica>();
 
 // Lógica de negocio
 builder.Services.AddScoped<IAlumnoLogica, AlumnoLogica>();
@@ -39,7 +40,7 @@ builder.Services.AddScoped<IRutinaLogica, RutinaLogica>();
 builder.Services.AddScoped<ISuscripcionLogica, SuscripcionLogica>();
 builder.Services.AddScoped<IAlumnoSuscripcionLogica, AlumnoSuscripcionLogica>();
 
-// CORS (ajustar el origen cuando esté definido el dominio del frontend)
+// CORS 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("FrontendPolicy", policy =>
@@ -52,7 +53,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// ---------- Middleware / Pipeline ----------
+// Middleware / Pipeline 
 
 if (app.Environment.IsDevelopment())
 {
@@ -63,7 +64,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors("FrontendPolicy");
 
-// ---------- Endpoints ----------
+// Endpoints 
 
 app.MapAlumnoEndpoints();
 app.MapProfesorEndpoints();
@@ -75,5 +76,6 @@ app.MapPagoEndpoints();
 app.MapRutinaEndpoints();
 app.MapSuscripcionEndpoints();
 app.MapAlumnoSuscripcionEndpoints();
+app.MapAuthEndpoints();
 
 app.Run();
