@@ -43,7 +43,7 @@ public static class ActividadAlumnoEndpoints
             if (resultado == ResultadoInscripcion.InscripcionNoEncontrada)
                 return Results.Json(new { status = 404, message = "No se encontró una inscripción activa para ese alumno en esa actividad" }, statusCode: 404);
 
-            return Results.Json(new { status = 204, message = "Inscripción dada de baja correctamente" }, statusCode: 204);
+            return Results.NoContent();
         })
         .WithName("DarDeBajaInscripcion")
         .WithSummary("Da de baja la inscripción de un alumno en una actividad")
@@ -60,16 +60,12 @@ public static class ActividadAlumnoEndpoints
             if (resultado == ResultadoInscripcion.ActividadNoEncontrada)
                 return Results.Json(new { status = 404, message = "Actividad no encontrada" }, statusCode: 404);
 
-            if (!data!.Any())
-                return Results.Json(new { status = 204, message = "No hay alumnos inscriptos en esta actividad" }, statusCode: 204);
-
             return Results.Ok(new { status = 200, message = "Alumnos inscriptos obtenidos correctamente", data });
         })
         .WithName("GetAlumnosPorActividad")
         .WithSummary("Obtiene los alumnos inscriptos en una actividad")
         .WithDescription("Retorna la lista de alumnos actualmente inscriptos y activos en la actividad indicada.")
         .Produces<IEnumerable<AlumnoInscriptoDto>>(200)
-        .Produces(204)
         .Produces(404)
         .Produces(500);
     }

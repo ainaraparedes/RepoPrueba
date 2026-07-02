@@ -12,8 +12,6 @@ public static class ProfesorEndpoints
         group.MapGet("/", async (IProfesorLogica logica) =>
         {
             var lista = await logica.ObtenerTodosAsync();
-            if (!lista.Any())
-                return Results.Json(new { status = 204, message = "No se encontraron profesores" }, statusCode: 204);
 
             return Results.Ok(new { status = 200, message = "Profesores obtenidos correctamente", data = lista });
         })
@@ -22,7 +20,6 @@ public static class ProfesorEndpoints
         .WithDescription("Retorna una lista de todos los profesores registrados en el sistema con datos abreviados (DTO).")
         .WithTags("Profesor")
         .Produces(200)
-        .Produces(204)
         .Produces(500);
 
         group.MapGet("/{id:int}", async (int id, IProfesorLogica logica) =>
@@ -67,7 +64,7 @@ public static class ProfesorEndpoints
         .WithDescription("Da de alta un nuevo profesor en el sistema con todos sus datos personales.")
         .WithTags("Profesor")
         .Produces<ProfesorDto>(201)
-        .Produces(422)
+        .Produces(400)
         .Produces(403)
         .Produces(500);
 
@@ -95,7 +92,7 @@ public static class ProfesorEndpoints
             if (!eliminado)
                 return Results.Json(new { status = 404, message = "Profesor no encontrado" }, statusCode: 404);
 
-            return Results.Json(new { status = 204, message = "Profesor eliminado correctamente" }, statusCode: 204);
+            return Results.NoContent();
         })
         .WithName("DeleteProfesor")
         .WithSummary("Elimina un profesor")

@@ -12,8 +12,6 @@ public static class RutinaEndpoints
         group.MapGet("/", async (IRutinaLogica logica) =>
         {
             var lista = await logica.ObtenerTodosAsync();
-            if (!lista.Any())
-                return Results.Json(new { status = 204, message = "No se encontraron rutinas" }, statusCode: 204);
 
             return Results.Ok(new { status = 200, message = "Rutinas obtenidas correctamente", data = lista });
         })
@@ -22,7 +20,6 @@ public static class RutinaEndpoints
         .WithDescription("Retorna la lista completa de rutinas registradas en el sistema.")
         .WithTags("Rutina")
         .Produces<IEnumerable<RutinaDto>>(200)
-        .Produces(204)
         .Produces(500);
 
         group.MapGet("/{id:int}", async (int id, IRutinaLogica logica) =>
@@ -51,7 +48,7 @@ public static class RutinaEndpoints
         .WithDescription("Da de alta una nueva rutina asignada por un profesor a un alumno.")
         .WithTags("Rutina")
         .Produces<RutinaDto>(201)
-        .Produces(422)
+        .Produces(400)
         .Produces(500);
 
         group.MapPut("/{id:int}", async (int id, RutinaCreateDto dto, IRutinaLogica logica) =>
@@ -77,7 +74,7 @@ public static class RutinaEndpoints
             if (!eliminado)
                 return Results.Json(new { status = 404, message = "Rutina no encontrada" }, statusCode: 404);
 
-            return Results.Json(new { status = 204, message = "Rutina eliminada correctamente" }, statusCode: 204);
+            return Results.NoContent();
         })
         .WithName("DeleteRutina")
         .WithSummary("Elimina una rutina")

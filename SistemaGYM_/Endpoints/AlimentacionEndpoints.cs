@@ -12,8 +12,6 @@ public static class AlimentacionEndpoints
         group.MapGet("/", async (IAlimentacionLogica logica) =>
         {
             var lista = await logica.ObtenerTodosAsync();
-            if (!lista.Any())
-                return Results.Json(new { status = 204, message = "No se encontraron planes de alimentación" }, statusCode: 204);
 
             return Results.Ok(new { status = 200, message = "Planes de alimentación obtenidos correctamente", data = lista });
         })
@@ -22,7 +20,6 @@ public static class AlimentacionEndpoints
         .WithDescription("Retorna la lista completa de planes de alimentación registrados en el sistema.")
         .WithTags("Alimentacion")
         .Produces<IEnumerable<AlimentacionDto>>(200)
-        .Produces(204)
         .Produces(500);
 
         group.MapGet("/{id:int}", async (int id, IAlimentacionLogica logica) =>
@@ -51,7 +48,6 @@ public static class AlimentacionEndpoints
         .WithDescription("Da de alta un nuevo plan de alimentación asociado a un profesor.")
         .WithTags("Alimentacion")
         .Produces<AlimentacionDto>(201)
-        .Produces(422)
         .Produces(500);
 
         group.MapPut("/{id:int}", async (int id, AlimentacionCreateDto dto, IAlimentacionLogica logica) =>
@@ -77,7 +73,7 @@ public static class AlimentacionEndpoints
             if (!eliminado)
                 return Results.Json(new { status = 404, message = "Plan de alimentación no encontrado" }, statusCode: 404);
 
-            return Results.Json(new { status = 204, message = "Plan de alimentación eliminado correctamente" }, statusCode: 204);
+            return Results.NoContent();
         })
         .WithName("DeleteAlimentacion")
         .WithSummary("Elimina un plan de alimentación")

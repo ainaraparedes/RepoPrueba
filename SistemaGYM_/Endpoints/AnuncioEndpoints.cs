@@ -12,8 +12,6 @@ public static class AnuncioEndpoints
         group.MapGet("/", async (IAnuncioLogica logica) =>
         {
             var lista = await logica.ObtenerTodosAsync();
-            if (!lista.Any())
-                return Results.Json(new { status = 204, message = "No se encontraron anuncios" }, statusCode: 204);
 
             return Results.Ok(new { status = 200, message = "Anuncios obtenidos correctamente", data = lista });
         })
@@ -22,7 +20,6 @@ public static class AnuncioEndpoints
         .WithDescription("Retorna la lista completa de anuncios publicados en el sistema.")
         .WithTags("Anuncio")
         .Produces<IEnumerable<AnuncioDto>>(200)
-        .Produces(204)
         .Produces(500);
 
         group.MapGet("/{id:int}", async (int id, IAnuncioLogica logica) =>
@@ -51,7 +48,7 @@ public static class AnuncioEndpoints
         .WithDescription("Publica un nuevo anuncio asociado a un profesor.")
         .WithTags("Anuncio")
         .Produces<AnuncioDto>(201)
-        .Produces(422)
+        .Produces(400)
         .Produces(500);
 
         group.MapPut("/{id:int}", async (int id, AnuncioCreateDto dto, IAnuncioLogica logica) =>
@@ -77,7 +74,7 @@ public static class AnuncioEndpoints
             if (!eliminado)
                 return Results.Json(new { status = 404, message = "Anuncio no encontrado" }, statusCode: 404);
 
-            return Results.Json(new { status = 204, message = "Anuncio eliminado correctamente" }, statusCode: 204);
+            return Results.NoContent();
         })
         .WithName("DeleteAnuncio")
         .WithSummary("Elimina un anuncio")

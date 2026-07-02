@@ -17,8 +17,6 @@ public static class AlumnoSuscripcionEndpoints
             if (resultado == ResultadoSuscripcion.AlumnoNoEncontrado)
                 return Results.Json(new { status = 404, message = "Alumno no encontrado" }, statusCode: 404);
 
-            if (!data!.Any())
-                return Results.Json(new { status = 204, message = "El alumno no tiene suscripciones registradas" }, statusCode: 204);
 
             return Results.Ok(new { status = 200, message = "Historial de suscripciones obtenido correctamente", data });
         })
@@ -27,7 +25,6 @@ public static class AlumnoSuscripcionEndpoints
         .WithDescription("Retorna todas las suscripciones (activas e inactivas) asociadas a un alumno, ordenadas por fecha de inicio descendente.")
         .WithTags("AlumnoSuscripcion")
         .Produces(200)
-        .Produces(204)
         .Produces(404)
         .Produces(500);
 
@@ -66,7 +63,7 @@ public static class AlumnoSuscripcionEndpoints
             if (resultado == ResultadoSuscripcion.SuscripcionNoEncontrada)
                 return Results.Json(new { status = 404, message = "No se encontró una suscripción activa con ese ID para este alumno" }, statusCode: 404);
 
-            return Results.Json(new { status = 204, message = "Suscripción cancelada correctamente" }, statusCode: 204);
+            return Results.NoContent();
         })
         .WithName("CancelarSuscripcion")
         .WithSummary("Cancela la suscripción activa de un alumno")

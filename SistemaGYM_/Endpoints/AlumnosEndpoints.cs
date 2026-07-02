@@ -13,9 +13,6 @@ public static class AlumnoEndpoints
         group.MapGet("/", async (IAlumnoLogica logica) =>
         {
             var alumnos = await logica.ObtenerTodosAsync();
-            if (!alumnos.Any())
-                return Results.Json(new { status = 204, message = "No se encontraron alumnos" }, statusCode: 204);
-
             return Results.Ok(new { status = 200, message = "Alumnos obtenidos correctamente", data = alumnos });
         })
         .WithName("GetAllAlumnos")
@@ -23,7 +20,6 @@ public static class AlumnoEndpoints
         .WithDescription("Retorna una lista de todos los alumnos registrados en el sistema con datos abreviados (DTO).")
         .WithTags("Alumno")
         .Produces<IEnumerable<AlumnoDto>>(200)
-        .Produces(204)
         .Produces(500);
 
         // GET /api/alumnos/{id}
@@ -63,7 +59,6 @@ public static class AlumnoEndpoints
         // POST /api/alumnos
         group.MapPost("/", async (AlumnoCreateDto dto, IAlumnoLogica logica) =>
         {
-            // Nota: Podrías agregar validaciones acá para devolver el 422 de tu docu si hiciese falta.
             var creado = await logica.CrearAsync(dto);
             return Results.Json(new { status = 201, message = "Alumno creado correctamente", data = creado }, statusCode: 201);
         })
@@ -72,7 +67,6 @@ public static class AlumnoEndpoints
         .WithDescription("Da de alta un nuevo alumno en el sistema con sus datos personales.")
         .WithTags("Alumno")
         .Produces<AlumnoDto>(201)
-        .Produces(422)
         .Produces(500);
 
         // PUT /api/alumnos/{id}
@@ -100,7 +94,7 @@ public static class AlumnoEndpoints
             if (!eliminado)
                 return Results.Json(new { status = 404, message = "Alumno no encontrado" }, statusCode: 404);
 
-            return Results.Json(new { status = 204, message = "Alumno eliminado correctamente" }, statusCode: 204);
+            return Results.NoContent();
         })
         .WithName("DeleteAlumno")
         .WithSummary("Elimina un alumno")

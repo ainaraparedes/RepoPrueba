@@ -12,8 +12,6 @@ public static class PagoEndpoints
         group.MapGet("/", async (IPagoLogica logica) =>
         {
             var lista = await logica.ObtenerTodosAsync();
-            if (!lista.Any())
-                return Results.Json(new { status = 204, message = "No se encontraron pagos" }, statusCode: 204);
 
             return Results.Ok(new { status = 200, message = "Pagos obtenidos correctamente", data = lista });
         })
@@ -22,7 +20,6 @@ public static class PagoEndpoints
         .WithDescription("Retorna la lista completa de pagos registrados en el sistema.")
         .WithTags("Pago")
         .Produces<IEnumerable<PagoDto>>(200)
-        .Produces(204)
         .Produces(500);
 
         group.MapGet("/{id:int}", async (int id, IPagoLogica logica) =>
@@ -51,7 +48,7 @@ public static class PagoEndpoints
         .WithDescription("Registra un pago de un alumno asociado a una suscripción.")
         .WithTags("Pago")
         .Produces<PagoDto>(201)
-        .Produces(422)
+        .Produces(400)
         .Produces(500);
 
         group.MapPut("/{id:int}", async (int id, PagoCreateDto dto, IPagoLogica logica) =>
@@ -77,7 +74,7 @@ public static class PagoEndpoints
             if (!eliminado)
                 return Results.Json(new { status = 404, message = "Pago no encontrado" }, statusCode: 404);
 
-            return Results.Json(new { status = 204, message = "Pago eliminado correctamente" }, statusCode: 204);
+            return Results.NoContent();
         })
         .WithName("DeletePago")
         .WithSummary("Elimina un pago")

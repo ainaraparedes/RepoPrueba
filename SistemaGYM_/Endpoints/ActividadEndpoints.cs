@@ -12,8 +12,6 @@ public static class ActividadEndpoints
         group.MapGet("/", async (IActividadLogica logica) =>
         {
             var lista = await logica.ObtenerTodosAsync();
-            if (!lista.Any())
-                return Results.Json(new { status = 204, message = "No se encontraron actividades" }, statusCode: 204);
 
             return Results.Ok(new { status = 200, message = "Actividades obtenidas correctamente", data = lista });
         })
@@ -22,7 +20,6 @@ public static class ActividadEndpoints
         .WithDescription("Retorna la lista completa de actividades registradas en el sistema.")
         .WithTags("Actividad")
         .Produces<IEnumerable<ActividadDto>>(200)
-        .Produces(204)
         .Produces(500);
 
         group.MapGet("/{id:int}", async (int id, IActividadLogica logica) =>
@@ -51,7 +48,6 @@ public static class ActividadEndpoints
         .WithDescription("Da de alta una nueva actividad del gimnasio, asociada a un profesor y a un día de la semana.")
         .WithTags("Actividad")
         .Produces<ActividadDto>(201)
-        .Produces(422)
         .Produces(500);
 
         group.MapPut("/{id:int}", async (int id, ActividadCreateDto dto, IActividadLogica logica) =>
@@ -77,7 +73,7 @@ public static class ActividadEndpoints
             if (!eliminado)
                 return Results.Json(new { status = 404, message = "Actividad no encontrada" }, statusCode: 404);
 
-            return Results.Json(new { status = 204, message = "Actividad eliminada correctamente" }, statusCode: 204);
+            return Results.NoContent();
         })
         .WithName("DeleteActividad")
         .WithSummary("Elimina una actividad")

@@ -12,8 +12,6 @@ public static class SuscripcionEndpoints
         group.MapGet("/", async (ISuscripcionLogica logica) =>
         {
             var lista = await logica.ObtenerTodosAsync();
-            if (!lista.Any())
-                return Results.Json(new { status = 204, message = "No se encontraron planes de suscripción" }, statusCode: 204);
 
             return Results.Ok(new { status = 200, message = "Planes de suscripción obtenidos correctamente", data = lista });
         })
@@ -22,7 +20,6 @@ public static class SuscripcionEndpoints
         .WithDescription("Retorna la lista completa de planes de suscripción disponibles en el gimnasio.")
         .WithTags("Suscripcion")
         .Produces<IEnumerable<SuscripcionDto>>(200)
-        .Produces(204)
         .Produces(500);
 
         group.MapGet("/{id:int}", async (int id, ISuscripcionLogica logica) =>
@@ -51,7 +48,7 @@ public static class SuscripcionEndpoints
         .WithDescription("Da de alta un nuevo plan de suscripción con nombre, precio y duración en días.")
         .WithTags("Suscripcion")
         .Produces<SuscripcionDto>(201)
-        .Produces(422)
+        .Produces(400)
         .Produces(500);
 
         group.MapPut("/{id:int}", async (int id, SuscripcionCreateDto dto, ISuscripcionLogica logica) =>
@@ -77,7 +74,7 @@ public static class SuscripcionEndpoints
             if (!eliminado)
                 return Results.Json(new { status = 404, message = "Plan de suscripción no encontrado" }, statusCode: 404);
 
-            return Results.Json(new { status = 204, message = "Plan de suscripción eliminado correctamente" }, statusCode: 204);
+            return Results.NoContent();
         })
         .WithName("DeleteSuscripcion")
         .WithSummary("Elimina un plan de suscripción")
