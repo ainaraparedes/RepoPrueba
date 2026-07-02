@@ -82,7 +82,7 @@ public static class ProfesorEndpoints
         .WithTags("Profesor")
         .Produces(200)
         .Produces(404)
-        .Produces(422)
+        .Produces(400)
         .Produces(401)
         .Produces(500);
 

@@ -1,5 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using SistemaGYM.Datos;
 using SistemaGYM.Entidades;
+using SistemaGYM.Endpoints;
+using SistemaGYM.Middleware;
+using SistemaGYM.Logica;
+using SistemaGYM.Repositorios;
 
 namespace SistemaGYM.Datos;
 

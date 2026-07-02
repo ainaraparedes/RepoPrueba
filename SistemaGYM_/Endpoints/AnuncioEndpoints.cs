@@ -65,7 +65,7 @@ public static class AnuncioEndpoints
         .WithTags("Anuncio")
         .Produces(200)
         .Produces(404)
-        .Produces(422)
+        .Produces(400)
         .Produces(500);
 
         group.MapDelete("/{id:int}", async (int id, IAnuncioLogica logica) =>

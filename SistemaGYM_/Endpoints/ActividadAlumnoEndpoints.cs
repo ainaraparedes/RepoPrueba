@@ -3,6 +3,7 @@ using SistemaGYM.Logica.DTOs;
 
 namespace SistemaGYM.Endpoints;
 
+
 public static class ActividadAlumnoEndpoints
 {
     public static void MapActividadAlumnoEndpoints(this IEndpointRouteBuilder app)

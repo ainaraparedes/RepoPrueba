@@ -47,7 +47,7 @@ public class AlumnoLogica : IAlumnoLogica
         return new AlumnoDetalleDto(
             a.Id, a.Dni, a.Nombre, a.Apellido,
             a.Direccion ?? string.Empty, a.Email, a.Telefono,
-            suscripcionActiva, a.EstaActivo.ToString()
+            suscripcionActiva, a.EstaActivo
         );
     }
 

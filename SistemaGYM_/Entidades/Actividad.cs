@@ -1,7 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-namespace SistemaGYM.Entidades;
+using SistemaGYM;
 
+namespace SistemaGYM.Entidades;
     public class Actividad
     {
         [Key]

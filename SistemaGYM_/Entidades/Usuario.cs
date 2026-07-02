@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using SistemaGYM;
 
+namespace SistemaGYM.Entidades;
 public class Usuario
     {
         [Key]

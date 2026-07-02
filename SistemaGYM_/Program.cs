@@ -5,6 +5,7 @@ using SistemaGYM.Endpoints;
 using SistemaGYM.Logica;
 using SistemaGYM.Repositorios;
 using SistemaGYM.Middleware; 
+using SistemaGYM.Entidades;
 
 var builder = WebApplication.CreateBuilder(args);
 

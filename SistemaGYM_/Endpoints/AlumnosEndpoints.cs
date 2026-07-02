@@ -85,7 +85,7 @@ public static class AlumnoEndpoints
         .WithTags("Alumno")
         .Produces(200)
         .Produces(404)
-        .Produces(422)
+        .Produces(400)
         .Produces(500);
 
         // DELETE /api/alumnos/{id}

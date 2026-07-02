@@ -64,7 +64,7 @@ public static class ActividadEndpoints
         .WithTags("Actividad")
         .Produces(200)
         .Produces(404)
-        .Produces(422)
+        .Produces(400)
         .Produces(500);
 
         group.MapDelete("/{id:int}", async (int id, IActividadLogica logica) =>
