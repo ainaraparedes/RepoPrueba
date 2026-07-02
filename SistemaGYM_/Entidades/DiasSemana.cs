@@ -1,4 +1,5 @@
 
+[Flags]
 public enum DiasSemana 
 {   
     Lunes, 

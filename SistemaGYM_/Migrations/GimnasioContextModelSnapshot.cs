@@ -35,8 +35,9 @@ namespace SistemaGYM_.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int>("Dias")
-                        .HasColumnType("int");
+                    b.Property<string>("Dias")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<TimeOnly>("HoraFin")
                         .HasColumnType("time");
@@ -114,7 +115,7 @@ namespace SistemaGYM_.Migrations
                         new
                         {
                             Id = 1,
-                            Contrasenia = "/XmgPllbZu8/OWRhlNj0sg==.5whO/qfK0+dE19fcmczGPqVzyiSsQfDGYdpY7NPkuZc=",
+                            Contrasenia = "/7cq1tNYOK1W9U+6SEyBkA==.Z/OMk9+ZDCsUNaT8Z0Ysy9vW9w8lJZU9GwVgTRhdM4o=",
                             Usuario = "Admin123"
                         });
                 });
@@ -386,7 +387,7 @@ namespace SistemaGYM_.Migrations
                     b.HasOne("SistemaGYM.Entidades.Profesor", "Profesor")
                         .WithMany("Actividades")
                         .HasForeignKey("ProfesorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Profesor");
@@ -416,7 +417,7 @@ namespace SistemaGYM_.Migrations
                     b.HasOne("SistemaGYM.Entidades.Profesor", "Profesor")
                         .WithMany("PlanesAlimentacion")
                         .HasForeignKey("ProfesorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Profesor");
@@ -446,7 +447,7 @@ namespace SistemaGYM_.Migrations
                     b.HasOne("SistemaGYM.Entidades.Profesor", "Profesor")
                         .WithMany("Anuncios")
                         .HasForeignKey("ProfesorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Profesor");
@@ -457,7 +458,7 @@ namespace SistemaGYM_.Migrations
                     b.HasOne("SistemaGYM.Entidades.Alumno", "Alumno")
                         .WithMany("AlumnoPagos")
                         .HasForeignKey("AlumnoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("SistemaGYM.Entidades.AlumnoSuscripcion", "AlumnoSuscripcion")
@@ -476,13 +477,13 @@ namespace SistemaGYM_.Migrations
                     b.HasOne("SistemaGYM.Entidades.Alumno", "Alumno")
                         .WithMany()
                         .HasForeignKey("AlumnoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("SistemaGYM.Entidades.Profesor", "Profesor")
                         .WithMany("Rutinas")
                         .HasForeignKey("ProfesorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Alumno");
