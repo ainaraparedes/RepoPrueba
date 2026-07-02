@@ -4,6 +4,7 @@ using SistemaGYM.Datos;
 using SistemaGYM.Endpoints;
 using SistemaGYM.Logica;
 using SistemaGYM.Repositorios;
+using SistemaGYM.Middleware; 
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 builder.Services.AddValidation();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 // DbContext cadena de conexion!!
 builder.Services.AddDbContext<GimnasioContext>(options =>
@@ -55,6 +58,7 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Middleware / Pipeline 
+app.UseExceptionHandler();
 
 if (app.Environment.IsDevelopment())
 {

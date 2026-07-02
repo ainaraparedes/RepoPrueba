@@ -48,6 +48,7 @@ public static class AlimentacionEndpoints
         .WithDescription("Da de alta un nuevo plan de alimentación asociado a un profesor.")
         .WithTags("Alimentacion")
         .Produces<AlimentacionDto>(201)
+        .Produces(400)
         .Produces(500);
 
         group.MapPut("/{id:int}", async (int id, AlimentacionCreateDto dto, IAlimentacionLogica logica) =>

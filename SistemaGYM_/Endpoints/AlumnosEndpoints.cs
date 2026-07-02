@@ -67,6 +67,7 @@ public static class AlumnoEndpoints
         .WithDescription("Da de alta un nuevo alumno en el sistema con sus datos personales.")
         .WithTags("Alumno")
         .Produces<AlumnoDto>(201)
+        .Produces(400)
         .Produces(500);
 
         // PUT /api/alumnos/{id}
